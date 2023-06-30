@@ -18,7 +18,7 @@ filtrado = data[data["FECHA_RESULTADO"].str.startswith(str(year_filter))]
 porcentaje_total = (num_filas / num_filas) * 100
 fig = go.Figure()
 fig.add_trace(go.Bar(
-    y=["Total: "+str(num_filas)],
+    y=["Total de registros: "+str(num_filas)],
     x=[porcentaje_total],
     orientation='h',
     marker=dict(
@@ -37,7 +37,8 @@ st.plotly_chart(fig)
 count_by_department = filtrado["DEPARTAMENTO"].value_counts().reset_index()
 count_by_department.columns = ["Departamento", "Total"]
 colors = px.colors.qualitative.Plotly
-fig = px.bar(count_by_department, x="Departamento", y="Total", title="Positivos COVID-19 por DEPARTAMENTO - 2023", color="Departamento", color_discrete_sequence=colors)
+fig = px.bar(count_by_department, x="Departamento", y="Total",
+             title="Positivos COVID-19 por DEPARTAMENTO - 2023", color="Departamento", color_discrete_sequence=colors)
 st.plotly_chart(fig)
 departamentos = filtrado['DEPARTAMENTO'].unique()
 distritos = filtrado['DISTRITO'].unique()
@@ -58,14 +59,16 @@ if departamento:
         distrito = st.sidebar.selectbox('Seleccionar distrito', distritos)
         if distrito:
             filtrado = filtrado[filtrado['DISTRITO'] == distrito]
-meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-filtrado['FECHA_RESULTADO'] = pd.to_datetime(filtrado['FECHA_RESULTADO'], format='%Y%m%d')
+meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+         'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+filtrado['FECHA_RESULTADO'] = pd.to_datetime(
+    filtrado['FECHA_RESULTADO'], format='%Y%m%d')
 filtrado['MES'] = filtrado['FECHA_RESULTADO'].dt.month
 meses_unicos = filtrado['MES'].unique()
 meses_unicos.sort()
 meses_filtrados = [meses[mes - 1] for mes in meses_unicos]
-mes_seleccionado = st.sidebar.selectbox('Seleccionar mes',meses_filtrados)
-num_filas_filtrado = 0  
+mes_seleccionado = st.sidebar.selectbox('Seleccionar mes', meses_filtrados)
+num_filas_filtrado = 0
 if mes_seleccionado:
     mes_numero = meses_unicos[meses_filtrados.index(mes_seleccionado)]
     filtrado = filtrado[filtrado['MES'] == mes_numero]
@@ -77,9 +80,12 @@ count_by_province.columns = ['Provincia', 'Total']
 count_by_district = filtrado['DISTRITO'].value_counts().reset_index()
 count_by_district.columns = ['Distrito', 'Total']
 fig = sp.make_subplots(rows=1, cols=3)
-fig.add_trace(go.Bar(x=count_by_department['Departamento'], y=count_by_department['Total'], name='Departamento'), row=1, col=1)
-fig.add_trace(go.Bar(x=count_by_province['Provincia'], y=count_by_province['Total'], name='Provincia'), row=1, col=2)
-fig.add_trace(go.Bar(x=count_by_district['Distrito'], y=count_by_district['Total'], name='Distrito'), row=1, col=3)
+fig.add_trace(go.Bar(x=count_by_department['Departamento'],
+              y=count_by_department['Total'], name='Departamento'), row=1, col=1)
+fig.add_trace(go.Bar(x=count_by_province['Provincia'],
+              y=count_by_province['Total'], name='Provincia'), row=1, col=2)
+fig.add_trace(go.Bar(x=count_by_district['Distrito'],
+              y=count_by_district['Total'], name='Distrito'), row=1, col=3)
 fig.update_layout(title='Conteos por Ubicación', showlegend=False)
 fig.update_layout(title='Conteo por DEPARTAMENTO, PROVINCIA y DISTRITO durante el mes de '+str(mes_seleccionado),
                   xaxis_title='Categoría', yaxis_title='Total',
@@ -87,23 +93,32 @@ fig.update_layout(title='Conteo por DEPARTAMENTO, PROVINCIA y DISTRITO durante e
 st.plotly_chart(fig)
 count_by_method = filtrado["METODODX"].value_counts().reset_index()
 count_by_method.columns = ["Metodo", "Total"]
-count_by_method = count_by_method[count_by_method["Metodo"].isin(["AG", "PCR", "PR"])]
-fig = px.bar(count_by_method, x="Metodo", y="Total", title="Tipo de MÉTODO durante el mes de "+str(mes_seleccionado), color="Metodo", color_discrete_sequence=px.colors.qualitative.Plotly)
+count_by_method = count_by_method[count_by_method["Metodo"].isin([
+                                                                 "AG", "PCR", "PR"])]
+fig = px.bar(count_by_method, x="Metodo", y="Total", title="Tipo de MÉTODO durante el mes de " +
+             str(mes_seleccionado), color="Metodo", color_discrete_sequence=px.colors.qualitative.Plotly)
 st.plotly_chart(fig)
 count_by_sex = filtrado["SEXO"].value_counts().reset_index()
 count_by_sex.columns = ["Sexo", "Total"]
-fig = px.pie(count_by_sex, values="Total", names="Sexo", title="Total por SEXO durante el mes de "+str(mes_seleccionado))
+fig = px.pie(count_by_sex, values="Total", names="Sexo",
+             title="Total por SEXO durante el mes de "+str(mes_seleccionado))
 st.plotly_chart(fig)
 if len(filtrado) > 0:
     conteo_edad = filtrado['EDAD'].value_counts().reset_index()
     conteo_edad.columns = ['EDAD', 'TOTAL']
-    fig = px.bar(conteo_edad, x='EDAD', y='TOTAL', color='EDAD', text='TOTAL', 
-                 labels={'EDAD': 'Edad', 'TOTAL': 'TOTAL'}, title='Total por EDAD durante el mes de '+str(mes_seleccionado))
-    fig.update_traces(texttemplate='%{text}', textposition='outside')
-    fig.update_layout(xaxis={'categoryorder': 'total descending'})
+    fig = go.Figure(
+        data=[go.Pie(labels=conteo_edad['EDAD'], values=conteo_edad['TOTAL'])])
+    fig.update_traces(textinfo='percent+label', textposition='outside',
+                      pull=[0.1] * len(conteo_edad))
+    fig.update_layout(
+        title="Total según EDAD",
+        xaxis_title="Porcentaje",
+        yaxis_title="",
+        showlegend=True
+    )
     st.plotly_chart(fig)
     st.subheader('TABLA POSITIVOS COVID-19')
-    columnas = ['DEPARTAMENTO', 'PROVINCIA','DISTRITO','SEXO','EDAD']
+    columnas = ['DEPARTAMENTO', 'PROVINCIA', 'DISTRITO', 'SEXO', 'EDAD']
     st.write(filtrado[columnas])
     st.balloons()
 else:

@@ -2,25 +2,14 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
-st.set_page_config(page_title="Dashboard", layout='wide',
-                   initial_sidebar_state='auto')
-columns = ["DEPARTAMENTO", "PROVINCIA", "DISTRITO", "METODODX",
-           "EDAD", "SEXO", "FECHA_RESULTADO", "id_persona"]
-# data = pd.read_csv("https://jivia.net/sendy/positivos_covid.csv", delimiter=";", usecols=columns) #acceso remoto
-data = pd.read_csv("positivos_covid.csv", delimiter=";", usecols=columns) #acceso local
+st.set_page_config(page_title="Dashboard", layout='wide', initial_sidebar_state='auto')
+data = pd.read_csv("https://jivia.net/sendy/positivos_covid_filtrado.csv")
 data["FECHA_RESULTADO"] = data["FECHA_RESULTADO"].astype(str).str.replace(",", "").str.split(".", expand=True)[0]
 data["FECHA_RESULTADO"] = pd.to_datetime(data["FECHA_RESULTADO"], format="%Y%m%d", errors='coerce').dt.strftime("%Y%m%d")
-data = data.replace("", pd.NA)
-num_filas = len(data) - 1
-filtered_data = data[columns]
-dc = filtered_data.copy()
-year_filter_options = dc["FECHA_RESULTADO"].str[:4].unique()
-year_filter_options = year_filter_options[~pd.isnull(year_filter_options)]
-year_filter_options.sort()
+num_filas = len(data)-1
+year_filter_options = [2022, 2023]
 year_filter = st.sidebar.radio("Filtrar por año", year_filter_options)
-df_filtered = dc[dc["FECHA_RESULTADO"].str[:4] == year_filter]
-st.subheader(f"POSITIVOS COVID-19 - {year_filter}")
-df_filtered = dc[dc["FECHA_RESULTADO"].str[:4] == year_filter]
+df_filtered = data[data["FECHA_RESULTADO"].str.startswith(str(year_filter))]
 num_filas_filtrado = len(df_filtered) - 1
 porcentaje_total = (num_filas / num_filas) * 100
 porcentaje_filtrado = (num_filas_filtrado / num_filas) * 100

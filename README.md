@@ -1,21 +1,17 @@
-# Dashboard sobre la calidad de aire en la municipalidad de Miraflores 2020-2021
+# Dashboard sobre positivos covid-19
 
-El proyecto de visualización del dataset "Monitoreo de calidad de aire QAIRA - [Municipalidad de Miraflores]" utilizando Streamlit Community Cloud y GitHub tiene como objetivo proporcionar una interfaz interactiva y accesible para explorar y analizar los datos de calidad del aire recopilados por la Municipalidad de Miraflores.
+El proyecto de visualización en gráficas de barra de positivos de COVID-19 en el Perú durante los años 2020, 2021, 2022 y 2023 utiliza la herramienta Streamlit para crear una interfaz interactiva y amigable que permite explorar y analizar los datos de casos positivos de COVID-19 en el país.
 
-En este proyecto, se utilizó Streamlit, un marco de desarrollo de aplicaciones web en Python, para crear una aplicación web que permite a los usuarios visualizar y analizar los datos de calidad del aire de Miraflores. Streamlit Community Cloud es una plataforma que permite implementar y alojar aplicaciones de Streamlit en la nube de forma gratuita.
+La visualización se basa en datos recopilados durante los años mencionados y proporciona una representación clara y comprensible de la evolución de los casos de COVID-19 a lo largo del tiempo. El objetivo principal del proyecto es brindar a los usuarios una forma fácil de visualizar y comprender la magnitud del impacto de la pandemia en el Perú.
 
-El dataset utilizado contiene información detallada sobre diversos parámetros de calidad del aire, como la concentración de contaminantes, la humedad, la temperatura, etc. Estos datos se presentan en forma de series de tiempo, lo que permite realizar análisis y seguimiento de la evolución de la calidad del aire a lo largo del tiempo.
+La interfaz desarrollada con Streamlit permite a los usuarios seleccionar los años específicos que desean analizar y, a partir de esta selección, se generan gráficas de barras que muestran la cantidad de casos positivos de COVID-19 registrados en cada mes del año seleccionado. Esto permite identificar tendencias, patrones estacionales y posibles cambios en la propagación del virus a lo largo del tiempo.
 
-La aplicación desarrollada proporciona visualizaciones interactivas, como gráficos de líneas, diagramas de dispersión y tablas, que permiten a los usuarios explorar y comprender mejor los patrones y tendencias en los datos de calidad del aire. Además, se incluyen funcionalidades como la capacidad de filtrar los datos por fechas, comparar diferentes variables y personalizar la visualización según las necesidades del usuario.
+Además de la visualización en gráficas de barras, la herramienta Streamlit también proporciona funcionalidades adicionales, como la capacidad de filtrar los datos por regiones o ciudades específicas del Perú, lo que permite un análisis más detallado y localizado.
 
-Para alojar el proyecto en la nube, se utiliza GitHub, una plataforma de desarrollo colaborativo y control de versiones. GitHub permite almacenar y gestionar el código fuente de la aplicación, así como facilitar su implementación en Streamlit Community Cloud.
-Link de la aplicación web desplegado en Streamlit Community Cloud: https://dashboard-aire.streamlit.app  
+En resumen, el proyecto de visualización en gráficas de barra de positivos de COVID-19 en el Perú utilizando Streamlit brinda a los usuarios una forma interactiva y accesible de explorar y comprender la propagación de la enfermedad a lo largo de los años, facilitando el análisis de datos y la toma de decisiones informadas en relación con la pandemia.
+
 # Integrantes:
-1. Alarcón Arias, Julio Erick
-2. Aychasi Naupari, Luciana Andrea
-3. Poma Ñahuincopa, Carmen Alicia
-4. Valdiviezo Córdova, Milagro Herminia Pascualita
-
-
-# Proyecto-Programaci-n
-# Proyecto-Programaci-n
+1. Sendy Rodriguez
+2. ...
+3. ...
+4. ...

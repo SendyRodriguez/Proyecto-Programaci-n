@@ -10,6 +10,7 @@ Además de la visualización en gráficas de barras, la herramienta Streamlit ta
 
 En resumen, el proyecto de visualización en gráficas de barra de positivos de COVID-19 en el Perú utilizando Streamlit brinda a los usuarios una forma interactiva y accesible de explorar y comprender la propagación de la enfermedad a lo largo de los años, facilitando el análisis de datos y la toma de decisiones informadas en relación con la pandemia.
 
+Link de app web en Streamlit Community Cloud: https://positivoscovid.streamlit.app
 # Integrantes:
 1. Sendy Rodriguez Chapiama
 2. Andrea Olortegui Castro
